@@ -1,58 +1,58 @@
-const User = require('../models/user');
-const bcrypt = require('bcrypt');
+const { User } = require('../models')
+const bcrypt = require('bcrypt')
+const asyncHandler = require('../middleware/asyncHandler')
+const jwt = require('jsonwebtoken')
 
-exports.registerUser = async (req, res) => {
-    try {
-        const { username, password } = req.body
-        
-        let user = await User.findOne({ where: { user } })
-        if (user) {
-            return res.status(400).json({ message: 'User already exists' })
+const JWT_SECRET = process.env.JWT_SECRET
+
+exports.registerUser = asyncHandler(async (req, res, next) => {
+    const { username, password } = req.body
+
+    const user = await User.findOne({ where: { username } })
+    if (user) {
+        return res.sendStatus(409)
+    }
+
+    if (password.length < 8) {
+        return res.sendStatus(400)
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10)
+    const newUser = await User.create({
+        username,
+        password: hashedPassword,
+    })
+
+    res.status(201).json({
+        username: newUser.username,
+    })
+})
+
+exports.loginUser = asyncHandler(async (req, res, next) => {
+    const { username, password } = req.body
+
+    const user = await User.findOne({ where: { username } })
+    if (!user) {
+        return res.sendStatus(401)
+    }
+
+    const isValid = await bcrypt.compare(password, user.password)
+    if (!isValid) {
+        return res.sendStatus(401)
+    }
+
+    const token = jwt.sign(
+        {
+            id: user.id,
+            username: user.username,
+        },
+        JWT_SECRET,
+        {
+            expiresIn: '1h',
         }
+    )
 
-        const hashedPassword = await bcrypt.hash(password, 10)
-        user = await User.create({ username, password: hashedPassword })
-
-        res.status(201).json(
-            {
-                username: user.username
-            }
-        )
-    }
-    catch (err) {
-        res.status(500).json(
-            {
-                message: err.message
-            }
-        )
-    }
-}
-
-exports.loginUser = async (req, res) => {
-    try {
-        const { username, password } = req.body
-        
-        const user = await User.findOne({ where: { username } })
-        if (!user) {
-            return res.status(400).json({ message: 'User does not exist' })
-        }
-
-        const isValid = await bcrypt.compare(password, user.password)
-        if (!isValid) {
-            return res.status(400).json({ message: 'Invalid password' })
-        }
-
-        res.status(200).json(
-            {
-                token: 'TOKEN_HERE'
-            }
-        )
-    }
-    catch (err) {
-        res.status(500).json(
-            {
-                message: err.message
-            }
-        )
-    }
-}
+    res.status(200).json({
+        token
+    })
+})

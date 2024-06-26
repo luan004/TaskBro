@@ -11,8 +11,17 @@ const sequelize = new Sequelize(
     }
 )
 
-sequelize.authenticate()
-    .then(() => console.log('Connection has been established successfully.'))
-    .catch(err => console.error('Unable to connect to the database:', err))
+const User = require('./user')(sequelize, Sequelize)
 
-module.exports = sequelize
+sequelize.sync()
+    .then(() => {
+        console.log('Database synced')
+    })
+    .catch(err => {
+        console.error('Unable to sync database:', err)
+    })
+
+module.exports = {
+    User,
+    sequelize
+}
