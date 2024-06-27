@@ -3,11 +3,13 @@ import Login from './pages/Login'
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </Router>
+    <div className='dark:bg-slate-800 '>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </Router>
+    </div>
   )
 }
 
