@@ -3,7 +3,7 @@ import Login from './pages/Login'
 
 function App() {
   return (
-    <div className='dark:bg-slate-800 '>
+    <div>
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />

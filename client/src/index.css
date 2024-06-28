@@ -6,7 +6,11 @@
 
 * {
   font-family: 'Lexend', sans-serif;
-  transition: 0.2s;
+}
+
+/* Smooth transition */
+button, img, a {
+  transition: all 0.2s;
 }
 
 body {
