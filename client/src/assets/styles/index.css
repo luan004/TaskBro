@@ -8,11 +8,6 @@
   font-family: 'Lexend', sans-serif;
 }
 
-/* Smooth transition */
-button, img, a {
-  transition: all 0.2s;
-}
-
 body {
     min-width: 320px;
 }
