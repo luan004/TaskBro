@@ -1,28 +1,14 @@
-import { useState } from "react";
+import { useTheme } from '../utils/ThemeContext';
 
 const Login = () => {
-    const [dark, setDark] = useState(true)
-
-
-
-    const darkModeHandler = () => {
-        if (dark) {
-            document.documentElement.classList.remove('dark')
-            document.cookie = "theme=light;max-age=31536000"
-            setDark(false)
-        } else {
-            document.documentElement.classList.add('dark')
-            document.cookie = "theme=dark;max-age=31536000"
-            setDark(true)
-        }
-    }
+    const { darkMode, toggleDarkMode } = useTheme();
 
     return (
         <div className="min-h-screen dark:bg-gray-900 bg-gray-200 flex min-h-full flex-col justify-center px-7 py-24 ">
             
-            <button type="button" className="absolute top-0 right-0 m-7 p-2 rounded-full bg-gray-100 ring-slate-900/5 ring-1 shadow-lg dark:bg-gray-800 text-gray-900 dark:text-gray-200" onClick={() => darkModeHandler()}>
+            <button type="button" className="absolute top-0 right-0 m-7 p-2 rounded-full bg-gray-100 ring-slate-900/5 ring-1 shadow-lg dark:bg-gray-800 text-gray-900 dark:text-gray-200" onClick={toggleDarkMode}>
                 {
-                    dark ? "🌞" : "🌙"
+                    darkMode ? "🌞" : "🌙"
                 }
             </button>
 
