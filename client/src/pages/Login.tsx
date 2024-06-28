@@ -1,7 +1,9 @@
-import { useTheme } from '../utils/ThemeContext';
+import { useState } from 'react'
+import { useTheme } from '../utils/ThemeContext'
 
 const Login = () => {
-    const { darkMode, toggleDarkMode } = useTheme();
+    const { darkMode, toggleDarkMode } = useTheme()
+    const [ isLogin, setIsLogin] = useState(true)
 
     return (
         <div className="min-h-screen dark:bg-gray-900 bg-gray-200 flex min-h-full flex-col justify-center px-7 py-24 ">
@@ -13,39 +15,82 @@ const Login = () => {
             </button>
 
             <div className="dark:bg-gray-800 bg-gray-100 ring-1 ring-slate-900/5 shadow-xl p-6 rounded-lg sm:mx-auto sm:w-full sm:max-w-sm space-y-4">
-                <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-cyan-100">
-                    Entre ou cadastre-se
-                </h2>
-                <form className="space-y-4">
-                    <div>
-                        <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-cyan-100">
-                            Nome de usuário
+                
+                <form className={`space-y-4 ` + (isLogin ? '' : 'hidden')}>
+                    <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-cyan-100 py-2">
+                        Entrar
+                    </h2>
+
+                    <div className="relative">
+                        <input type="text" id="username" className="dark:bg-gray-900 dark:text-cyan-100 ring-1 ring-slate-900/5 block px-3 py-2 w-full text-sm text-gray-900 rounded-md dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:border-blue-600 shadow-sm peer" placeholder=" " />
+                        <label htmlFor="username" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 rounded-lg peer-focus:ring-1 ring-slate-900/5">
+                            Usuário
                         </label>
-                        <div className="mt-2">
-                            <input placeholder="Fulano1010..." autoComplete="username" name="email" type="email" required className="block w-full rounded-md border-0 py-1.5  px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 dark:bg-gray-900 dark:text-cyan-100 ring-1 ring-slate-900/5" />
-                        </div>
                     </div>
 
-                    <div>
-                        <label className="block text-sm font-medium leading-6 text-gray-900 dark:text-cyan-100">
+                    <div className="relative">
+                        <input type="password" id="password" className="dark:bg-gray-900 dark:text-cyan-100 ring-1 ring-slate-900/5 block px-3 py-2 w-full text-sm text-gray-900 rounded-md dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:border-blue-600 shadow-sm peer" placeholder=" " />
+                        <label htmlFor="password" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 rounded-lg peer-focus:ring-1 ring-slate-900/5">
                             Senha
                         </label>
-                        <div className="mt-2">
-                            <input placeholder="********" autoComplete="current-password" name="password" type="password" required className="block w-full rounded-md border-0 py-1.5  px-3 text-gray-900 shadow-sm placeholder:text-gray-400 sm:text-sm sm:leading-6 dark:bg-gray-900 dark:text-cyan-100 ring-1 ring-slate-900/5" />
-                        </div>
                     </div>
 
                     <div>
-                        <button type="submit" className="flex w-full justify-center rounded-md bg-cyan-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-cyan-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ring-1 ring-slate-900/5">
+                        <button type="submit" className="flex w-full justify-center rounded-md bg-cyan-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-cyan-500 focus-visible:outline ring-1 ring-slate-900/5">
                             Entrar
                         </button>
                     </div>
                 </form>
 
+                <form className={`space-y-4 ` + (isLogin ? 'hidden' : '')}>
+                    <h2 className="text-center text-2xl font-bold leading-9 tracking-tight text-gray-900 dark:text-cyan-100 py-2">
+                        Criar uma conta
+                    </h2>
+
+                    <div className="relative">
+                        <input type="text" id="name" className="dark:bg-gray-900 dark:text-cyan-100 ring-1 ring-slate-900/5 block px-3 py-2 w-full text-sm text-gray-900 rounded-md dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:border-blue-600 shadow-sm peer" placeholder=" " />
+                        <label htmlFor="name" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 rounded-lg peer-focus:ring-1 ring-slate-900/5">
+                            Nome
+                        </label>
+                    </div>
+
+                    <div className="relative">
+                        <input type="text" id="username" className="dark:bg-gray-900 dark:text-cyan-100 ring-1 ring-slate-900/5 block px-3 py-2 w-full text-sm text-gray-900 rounded-md dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:border-blue-600 shadow-sm peer" placeholder=" " />
+                        <label htmlFor="username" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 rounded-lg peer-focus:ring-1 ring-slate-900/5">
+                            Usuário
+                        </label>
+                    </div>
+
+                    <div className="relative">
+                        <input type="password" id="password" className="dark:bg-gray-900 dark:text-cyan-100 ring-1 ring-slate-900/5 block px-3 py-2 w-full text-sm text-gray-900 rounded-md dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:border-blue-600 shadow-sm peer" placeholder=" " />
+                        <label htmlFor="password" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 rounded-lg peer-focus:ring-1 ring-slate-900/5">
+                            Senha
+                        </label>
+                    </div>
+
+                    <div className="relative">
+                        <input type="password" id="password2" className="dark:bg-gray-900 dark:text-cyan-100 ring-1 ring-slate-900/5 block px-3 py-2 w-full text-sm text-gray-900 rounded-md dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:border-blue-600 shadow-sm peer" placeholder=" " />
+                        <label htmlFor="password2" className="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 rounded-lg peer-focus:ring-1 ring-slate-900/5">
+                            Confirmar senha
+                        </label>
+                    </div>
+
+                    <div>
+                        <button type="submit" className="flex w-full justify-center rounded-md bg-cyan-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-cyan-500 focus-visible:outline ring-1 ring-slate-900/5">
+                            Cadastrar-se
+                        </button>
+                    </div>
+                </form>
+                
+
                 <p className="mt-5 text-center text-sm text-gray-500">
-                    Ainda não tem conta?
-                    <a href="#" className="ml-1 font-semibold leading-6 text-cyan-600 hover:text-cyan-500">
-                        Cadastre-se!
+                    {
+                        isLogin ? 'Não tem uma conta?' : 'Já tem uma conta?'
+                    }
+                    <a className="ml-1 font-semibold leading-6 text-cyan-600 hover:text-cyan-500 hover:cursor-pointer" onClick={() => {setIsLogin(!isLogin)}}>
+                        {
+                            isLogin ? 'Cadastre-se' : 'Entrar'
+                        }
                     </a>
                 </p>
             </div>
