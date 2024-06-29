@@ -66,7 +66,9 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
         password: hashedPassword,
     })
 
-    res.sendStatus(201)
+    res.status(201).json({
+        status: 'success'
+    })
 })
 
 exports.loginUser = asyncHandler(async (req, res, next) => {

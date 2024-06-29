@@ -1,8 +1,19 @@
 const express = require('express')
 const app = express()
 const routes = require('./routes')
-const bodyParser = require('body-parser');
+const bodyParser = require('body-parser')
 const errorHandler = require('./middleware/errorHandler')
+const cors = require('cors')
+
+// Enable CORS
+app.use(
+    cors({
+        origin: 'http://localhost:5173',
+        credentials: true,
+    })
+)
+
+
 
 // Middleware
 app.use(express.json())
