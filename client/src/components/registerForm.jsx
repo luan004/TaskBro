@@ -3,18 +3,16 @@ import { useState } from 'react'
 const api = import.meta.env.VITE_API_URL
 
 const RegisterForm = () => {
-    const initialFormData = {
+    const [formData, setFormData] = useState({
         name: '',
         username: '',
         password: '',
         password2: ''
-    }
+    })
+    const [passwordError, setPasswordError] = useState(false)
+    const [fieldErrors, setFieldErrors] = useState({})
 
-    const [formData, setFormData] = useState<FormData>(initialFormData)
-    const [passwordError, setPasswordError] = useState<boolean>(false)
-    const [fieldErrors, setFieldErrors] = useState<{[key: string]: string}>({})
-
-    const handleChange = () => {
+    const handleChange = (e) => {
         const { name, value } = e.target
         setFormData({
             ...formData,
@@ -22,7 +20,7 @@ const RegisterForm = () => {
         })
     }
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
 
         if (formData.password === formData.password2) {
@@ -39,16 +37,21 @@ const RegisterForm = () => {
                     password: formData.password
                 })
             }).then(res => res.json())
-            .then((data: ApiResponse) => {
+            .then((data) => {
                 if (data.status && data.status === 'success') {
-                    setFormData(initialFormData)
+                    setFormData({
+                        name: '',
+                        username: '',
+                        password: '',
+                        password2: ''
+                    })
                     setFieldErrors({})
                 } else if (data.errors) {
-                    const errors: { [key: string]: string } = {};
+                    const errors = {}
                     data.errors.forEach(error => {
                         errors[error.field] = error.message;
                     });
-                    setFieldErrors(errors);
+                    setFieldErrors(errors)
                 }
             })
 
@@ -64,14 +67,14 @@ const RegisterForm = () => {
                     <input
                         type="text"
                         name="name"
-                        className="dark:bg-gray-900 dark:text-cyan-100 ring-1 ring-slate-900/5 block px-3 py-2 w-full text-sm text-gray-900 rounded-md dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:border-blue-600 shadow-sm peer"
+                        className="duration-300 dark:bg-gray-900 dark:text-cyan-100 ring-1 ring-slate-900/5 block px-3 py-2 w-full text-sm text-gray-900 rounded-md dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:border-blue-600 shadow-sm peer"
                         placeholder=" "
                         onChange={handleChange}
                         value={formData.name}
                         required
                     />
                     <label 
-                        className="transition absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 rounded-lg peer-focus:ring-1 ring-slate-900/5">
+                        className="duration-300 bg-white absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 origin-[0] dark:bg-gray-900 px-2 2 start-1 rounded-lg">
                         Nome
                     </label>
                 </div>
@@ -87,7 +90,7 @@ const RegisterForm = () => {
                     <input
                         type="text"
                         name="username"
-                        className="dark:bg-gray-900 dark:text-cyan-100 ring-1 ring-slate-900/5 block px-3 py-2 w-full text-sm text-gray-900 rounded-md dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:border-blue-600 shadow-sm peer"
+                        className="duration-300 dark:bg-gray-900 dark:text-cyan-100 ring-1 ring-slate-900/5 block px-3 py-2 w-full text-sm text-gray-900 rounded-md dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:border-blue-600 shadow-sm peer"
                         placeholder=" "
                         autoComplete="username"
                         onChange={handleChange}
@@ -95,7 +98,7 @@ const RegisterForm = () => {
                         required
                     />
                     <label 
-                        className="transition absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 rounded-lg peer-focus:ring-1 ring-slate-900/5">
+                        className="duration-300 bg-white absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 origin-[0] dark:bg-gray-900 px-2 2 start-1 rounded-lg">
                         Usuário
                     </label>
                 </div>
@@ -111,7 +114,7 @@ const RegisterForm = () => {
                     <input
                         type="password"
                         name="password"
-                        className="dark:bg-gray-900 dark:text-cyan-100 ring-1 ring-slate-900/5 block px-3 py-2 w-full text-sm text-gray-900 rounded-md dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:border-blue-600 shadow-sm peer"
+                        className="duration-300 dark:bg-gray-900 dark:text-cyan-100 ring-1 ring-slate-900/5 block px-3 py-2 w-full text-sm text-gray-900 rounded-md dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:border-blue-600 shadow-sm peer"
                         placeholder=" "
                         autoComplete='password'
                         onChange={handleChange}
@@ -119,7 +122,7 @@ const RegisterForm = () => {
                         required
                     />
                     <label 
-                        className="transition absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 rounded-lg peer-focus:ring-1 ring-slate-900/5">
+                        className="duration-300 bg-white absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 origin-[0] dark:bg-gray-900 px-2 2 start-1 rounded-lg">
                         Senha
                     </label>
                 </div>
@@ -135,7 +138,7 @@ const RegisterForm = () => {
                     <input
                         type="password"
                         name="password2"
-                        className="dark:bg-gray-900 dark:text-cyan-100 ring-1 ring-slate-900/5 block px-3 py-2 w-full text-sm text-gray-900 rounded-md dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:border-blue-600 shadow-sm peer"
+                        className="duration-300 dark:bg-gray-900 dark:text-cyan-100 ring-1 ring-slate-900/5 block px-3 py-2 w-full text-sm text-gray-900 rounded-md dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:border-blue-600 shadow-sm peer"
                         placeholder=" "
                         autoComplete='new-password'
                         onChange={handleChange}
@@ -143,7 +146,7 @@ const RegisterForm = () => {
                         required
                     />
                     <label 
-                        className="transition absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white dark:bg-gray-900 px-2 peer-focus:px-2 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 rounded-lg peer-focus:ring-1 ring-slate-900/5">
+                        className="duration-300 bg-white absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-4 scale-75 top-2 origin-[0] dark:bg-gray-900 px-2 2 start-1 rounded-lg">
                         Confirmar Senha
                     </label>
                 </div>
