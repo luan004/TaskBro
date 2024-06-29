@@ -6,26 +6,67 @@ const jwt = require('jsonwebtoken')
 const JWT_SECRET = process.env.JWT_SECRET
 
 exports.registerUser = asyncHandler(async (req, res, next) => {
-    const { username, password } = req.body
+    let { name, username, password } = req.body
 
+    let errors = []
+
+    // username validation
+    username = username.trim()
     const user = await User.findOne({ where: { username } })
     if (user) {
-        return res.sendStatus(409)
+        errors.push({
+            field: 'username',
+            message: 'Usuário já existe.'
+        })
+    }
+    if (!username || username.length < 3 || username.length > 32) {
+        errors.push({
+            field: 'username',
+            message: 'Usuário deve ter entre 3 e 32 caracteres.'
+        })
+    }
+    if (!/^[a-zA-Z0-9._-]+$/.test(username)) {
+        errors.push({
+            field: 'username',
+            message: 'Usuário deve conter apenas letras, números, pontos, traços e underlines.'
+        })
     }
 
-    if (password.length < 8) {
-        return res.sendStatus(400)
+    // name validation
+    name = name.trim()
+    if (!name || name.length < 3 || name.length > 255) {
+        errors.push({
+            field: 'name',
+            message: 'Nome deve ter entre 3 e 255 caracteres.'
+        })
+    }
+    if (!/^[a-zA-Z ]+$/.test(name)) {
+        errors.push({
+            field: 'name',
+            message: 'Nome deve conter apenas letras e espaços.'
+        })
+    }
+
+    // password validation
+    if (!password || password.length < 8 || password.length > 32) {
+        errors.push({
+            field: 'password',
+            message: 'Senha deve ter entre 8 e 32 caracteres.'
+        })
+    }
+
+    if (errors.length > 0) {
+        return res.status(400).json({ errors })
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
-    const newUser = await User.create({
+    await User.create({
+        name,
         username,
         password: hashedPassword,
     })
 
-    res.status(201).json({
-        username: newUser.username,
-    })
+    res.sendStatus(201)
 })
 
 exports.loginUser = asyncHandler(async (req, res, next) => {
@@ -44,6 +85,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
     const token = jwt.sign(
         {
             id: user.id,
+            name: user.name,
             username: user.username,
         },
         JWT_SECRET,
