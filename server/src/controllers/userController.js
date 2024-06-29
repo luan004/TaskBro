@@ -40,7 +40,7 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
             message: 'Nome deve ter entre 3 e 255 caracteres.'
         })
     }
-    if (!/^[a-zA-Z ]+$/.test(name)) {
+    if (!/^[a-zA-Z çÇ]+$/.test(name)) {
         errors.push({
             field: 'name',
             message: 'Nome deve conter apenas letras e espaços.'
@@ -56,7 +56,10 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     }
 
     if (errors.length > 0) {
-        return res.status(400).json({ errors })
+        return res.status(400).json({
+            status: 'fail',
+            errors
+        })
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
@@ -76,12 +79,18 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 
     const user = await User.findOne({ where: { username } })
     if (!user) {
-        return res.sendStatus(401)
+        return res.status(401).json({
+            status: 'fail',
+            message: 'Usuário ou senha incorretos.'
+        })
     }
 
     const isValid = await bcrypt.compare(password, user.password)
     if (!isValid) {
-        return res.sendStatus(401)
+        return res.status(401).json({
+            status: 'fail',
+            message: 'Usuário ou senha incorretos.'
+        })
     }
 
     const token = jwt.sign(
@@ -97,6 +106,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
     )
 
     res.status(200).json({
+        status: 'success',
         token
     })
 })
