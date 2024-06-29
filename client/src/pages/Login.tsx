@@ -14,8 +14,7 @@ const Login = () => {
         const data = new FormData(event.currentTarget)
 
         if (data.get('password-cad') !== data.get('password-cad2')) {
-            console.log('As senhas não conferem')
-            return
+            
         }
 
         fetch(`${url}/user/register`, {
@@ -115,6 +114,9 @@ const Login = () => {
                                 Confirmar senha
                             </label>
                         </div>
+                        {
+                            data.get('password-cad') !== data.get('password-cad2') ? <p className=" top-7 right-0 text-xs text-red-500 p-1 rounded-md shadow-sm bg-slate-200 ring-1 ring-gray-950 ring-opacity-20 dark:bg-gray-950">Senhas não conferem</p> : ''f
+                        }
                     </div>
                     
                     <div>
