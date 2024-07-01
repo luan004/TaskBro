@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useTheme } from '../utils/ThemeContext'
-import RegisterForm from '../components/registerForm'
-import LoginForm from '../components/loginForm'
+import RegisterForm from '../components/login/registerForm'
+import LoginForm from '../components/login/loginForm'
 
 const Login = () => {
     const { darkMode, toggleDarkMode } = useTheme()

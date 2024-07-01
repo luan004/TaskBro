@@ -79,7 +79,7 @@ const RegisterForm = () => {
                     </label>
                 </div>
                 {fieldErrors['name'] && (
-                    <p className="top-7 right-0 text-xs text-red-500 p-1 rounded-md shadow-sm bg-slate-200 ring-1 ring-gray-950 ring-opacity-20 dark:bg-gray-950">
+                    <p className="duration-300 top-7 right-0 text-xs text-red-500 p-1 rounded-md shadow-sm bg-slate-200 ring-1 ring-gray-950 ring-opacity-20 dark:bg-gray-950">
                         {fieldErrors['name']}
                     </p>
                 )}
@@ -103,7 +103,7 @@ const RegisterForm = () => {
                     </label>
                 </div>
                 {fieldErrors['username'] && (
-                    <p className="top-7 right-0 text-xs text-red-500 p-1 rounded-md shadow-sm bg-slate-200 ring-1 ring-gray-950 ring-opacity-20 dark:bg-gray-950">
+                    <p className="duration-300 top-7 right-0 text-xs text-red-500 p-1 rounded-md shadow-sm bg-slate-200 ring-1 ring-gray-950 ring-opacity-20 dark:bg-gray-950">
                         {fieldErrors['username']}
                     </p>
                 )}
@@ -127,7 +127,7 @@ const RegisterForm = () => {
                     </label>
                 </div>
                 {fieldErrors['password'] && (
-                    <p className="top-7 right-0 text-xs text-red-500 p-1 rounded-md shadow-sm bg-slate-200 ring-1 ring-gray-950 ring-opacity-20 dark:bg-gray-950">
+                    <p className="duration-300 top-7 right-0 text-xs text-red-500 p-1 rounded-md shadow-sm bg-slate-200 ring-1 ring-gray-950 ring-opacity-20 dark:bg-gray-950">
                         {fieldErrors['password']}
                     </p>
                 )}
@@ -151,7 +151,7 @@ const RegisterForm = () => {
                     </label>
                 </div>
                 <p
-                    className={`top-7 right-0 text-xs text-red-500 p-1 rounded-md shadow-sm bg-slate-200 ring-1 ring-gray-950 ring-opacity-20 dark:bg-gray-950 ` + (passwordError ? '' : 'hidden')}>
+                    className={`duration-300 top-7 right-0 text-xs text-red-500 p-1 rounded-md shadow-sm bg-slate-200 ring-1 ring-gray-950 ring-opacity-20 dark:bg-gray-950 ` + (passwordError ? '' : 'hidden')}>
                     As senhas não coincidem
                 </p>
             </div>
