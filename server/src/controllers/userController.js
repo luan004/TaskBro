@@ -101,7 +101,7 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
         },
         JWT_SECRET,
         {
-            expiresIn: '1h',
+            expiresIn: '7d'
         }
     )
 
@@ -112,6 +112,14 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
 })
 
 exports.authenticateUser = asyncHandler(async (req, res, next) => {
+
+    if (!req.headers.authorization || !req.headers.authorization.startsWith('Bearer')) {
+        return res.status(401).json({
+            status: 'fail',
+            message: 'invalid authorization header.'
+        })
+    }
+
     const token = req.headers.authorization.split(' ')[1]
     const decoded = jwt.verify(token, JWT_SECRET)
 
