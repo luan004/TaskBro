@@ -2,12 +2,21 @@ import { useState, useEffect } from 'react'
 import { useTheme } from '../utils/ThemeContext'
 import RegisterForm from '../components/login/registerForm'
 import LoginForm from '../components/login/loginForm'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
     const { darkMode, toggleDarkMode } = useTheme()
     const [ isLogin, setIsLogin] = useState(true)
+
+    const nav = useNavigate()
     
-    const url = 'http://localhost:3000/api'
+    useEffect(() => {
+        document.title = 'Taskbro - Login'
+
+        if (localStorage.getItem('token')) {
+            nav('/kanban')
+        }
+    })
 
     return (
         <div className="min-h-screen dark:bg-gray-900 bg-gray-300 flex min-h-full flex-col justify-center px-7 py-24 duration-300">

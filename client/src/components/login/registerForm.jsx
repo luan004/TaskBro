@@ -31,35 +31,6 @@ const RegisterForm = () => {
         if (formData.password === formData.password2) {
             setPasswordError(false)
 
-            /* fetch(api + '/user/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    name: formData.name,
-                    username: formData.username,
-                    password: formData.password
-                })
-            }).then(res => res.json())
-            .then((data) => {
-                if (data.status && data.status === 'success') {
-                    setFormData({
-                        name: '',
-                        username: '',
-                        password: '',
-                        password2: ''
-                    })
-                    setFieldErrors({})
-                } else if (data.errors) {
-                    const errors = {}
-                    data.errors.forEach(error => {
-                        errors[error.field] = error.message;
-                    });
-                    setFieldErrors(errors)
-                }
-            }) */
-
             axios.post(api + '/user/register', formData)
                 .then(res => {
                     if (res.data.status === 'success') {
