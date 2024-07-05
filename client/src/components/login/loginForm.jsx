@@ -1,8 +1,12 @@
 import { useState } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const api = import.meta.env.VITE_API_URL
 
 const LoginForm = () => {
+    const navigate = useNavigate()
+
     const [formData, setFormData] = useState({
         username: '',
         password: ''
@@ -21,17 +25,18 @@ const LoginForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        fetch(`${api}/user/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-        })
+        axios.post(`${api}/user/login`, formData)
+            .then(res => {
+                if (res.data.status === 'success') {
+                    localStorage.setItem('token', res.data.token)
+                    navigate('/kanban')
+                } else {
+                    setErrors(true)
+                }
+            })
+            .catch(err => {
+                setErrors(true)
+            })
     }
 
     return (

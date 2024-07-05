@@ -1,8 +1,13 @@
 import { useState } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const api = import.meta.env.VITE_API_URL
 
 const RegisterForm = () => {
+
+    let nav = useNavigate()
+
     const [formData, setFormData] = useState({
         name: '',
         username: '',
@@ -26,7 +31,7 @@ const RegisterForm = () => {
         if (formData.password === formData.password2) {
             setPasswordError(false)
 
-            fetch(api + '/user/register', {
+            /* fetch(api + '/user/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -53,8 +58,37 @@ const RegisterForm = () => {
                     });
                     setFieldErrors(errors)
                 }
-            })
+            }) */
 
+            axios.post(api + '/user/register', formData)
+                .then(res => {
+                    if (res.data.status === 'success') {
+                        setFormData({
+                            name: '',
+                            username: '',
+                            password: '',
+                            password2: ''
+                        })
+                        setFieldErrors({})
+
+                        axios.post(api + '/user/login', {
+                            username: formData.username,
+                            password: formData.password
+                        }).then(res => {
+                            if (res.data.status === 'success') {
+                                localStorage.setItem('token', res.data.token)
+                                nav('/kanban')
+                            }
+                        })
+                    } else if (res.data.errors) {
+                        const errors = {}
+                        res.data.errors.forEach(error => {
+                            errors[error.field] = error.message;
+                        });
+                        setFieldErrors(errors)
+                    }
+                })
+            
         } else {
             setPasswordError(true)
         }

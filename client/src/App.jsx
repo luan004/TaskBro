@@ -10,7 +10,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/kanban" element=
           {
-            <AuthProvider redirect={"/teste"}>
+            <AuthProvider redirect={"/login"}>
               <Kanban />
             </AuthProvider>
           }
