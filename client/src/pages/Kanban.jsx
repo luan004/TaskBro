@@ -1,20 +1,18 @@
-import React, { useEffect } from "react"
-import useAuth from "../components/global/auth"
+import { useEffect } from 'react'
+import SideBar from '../components/global/SideBar'
 
 const Kanban = () => {
 
-    const {
-        auth, saveToken, dropToken, authOrRedirect
-    } = useAuth()
-
     useEffect(() => {
-        dropToken()
-    }, [])
-
+        document.title = 'Taskbro - Kanban'
+    })
 
     return (
-        <div>
-            <h1>Kanban</h1>
+        <div className='flex'>
+            <SideBar />
+            <h1>
+                Kanbansad
+            </h1>
         </div>
     )
 }

@@ -6,7 +6,7 @@ const api = import.meta.env.VITE_API_URL
 
 const RegisterForm = () => {
 
-    let nav = useNavigate()
+    let navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         name: '',
@@ -48,7 +48,7 @@ const RegisterForm = () => {
                         }).then(res => {
                             if (res.data.status === 'success') {
                                 localStorage.setItem('token', res.data.token)
-                                nav('/kanban')
+                                navigate('/kanban')
                             }
                         })
                     } else if (res.data.errors) {

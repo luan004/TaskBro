@@ -8,13 +8,13 @@ const Login = () => {
     const { darkMode, toggleDarkMode } = useTheme()
     const [ isLogin, setIsLogin] = useState(true)
 
-    const nav = useNavigate()
+    const navigate = useNavigate()
     
     useEffect(() => {
         document.title = 'Taskbro - Login'
 
         if (localStorage.getItem('token')) {
-            nav('/kanban')
+            navigate('/kanban')
         }
     })
 

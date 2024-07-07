@@ -27,9 +27,12 @@ export const AuthProvider = ({ children, redirect }) => {
                         localStorage.removeItem("token")
                         navigate(redirect || '/login')
                     }
+                }).catch(err => {
+                    setUser(null)
+                    localStorage.removeItem("token")
+                    navigate(redirect || '/login')
                 })
             } catch (error) {
-                console.error(error)
                 setUser(null)
                 localStorage.removeItem("token")
                 navigate(redirect || '/login')
