@@ -8,11 +8,13 @@ const Kanban = () => {
     })
 
     return (
-        <div className='flex'>
+        <div className='flex bg-gray-200 dark:bg-gray-900 transition duration-300 dark:text-white'>
             <SideBar />
-            <h1>
-                Kanbansad
-            </h1>
+            <div className='p-3'>
+                <h1>
+                    Kanbansad
+                </h1>
+            </div>
         </div>
     )
 }

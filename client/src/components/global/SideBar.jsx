@@ -1,27 +1,53 @@
+// font awesome
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSun, faMoon, faGear, faTableColumns } from '@fortawesome/free-solid-svg-icons'
 import { useTheme } from '../../utils/ThemeContext'
 
 const SideBar = () => {
     const { darkMode, toggleDarkMode } = useTheme()
 
     return (
-        <nav className="p-4 bg-zinc-900 shadow-lg ring-1 ring-blue-600 h-screen w-48">
-            <ul className='space-y-1'>
-                <li>
-                    <button
-                        className='bg-zinc-950 px-2 py-1.5 rounded-md text-white text-sm shadow-sm ring-1 ring-slate-900/5 w-full hover:bg-zinc-800 transition duration-300'
-                    >
-                        Kanban
-                    </button>
+        <nav className="transition duration-300 p-4 shadow-md ring-1 ring-gray-700 h-screen bg-gray-800 min-w-56 text-white text-gray-600">
+            <ul className='space-y-2'>
+                <li
+                    className="mx-4 transition text-2xl font-bold w-full mb-4"
+                >
+                    Taskbro
                 </li>
                 <li>
-                    <button
-                        className='bg-zinc-950 px-2 py-1.5 rounded-md text-white text-sm shadow-sm ring-1 ring-slate-900/5 w-full hover:bg-zinc-800 transition duration-300'
+                    <a
+                        className="block cursor-pointer px-4 py-2 hover:ring-1 ring-gray-600 hover:shadow-md rounded-md text-sm w-full hover:bg-gray-700 transition duration-300 text-left"
+                    >
+                        <FontAwesomeIcon icon={faTableColumns} className="mr-3"/>
+                        Kanban
+                    </a>
+                </li>
+                <li>
+                    <a
+                        className="block cursor-pointer px-4 py-2 hover:ring-1 ring-gray-600 hover:shadow-md rounded-md text-sm w-full hover:bg-gray-700 transition duration-300 text-left"
                         onClick={toggleDarkMode}
                     >
                         {
-                            darkMode ? "🌞 Modo claro" : "🌛 Modo escuro"
+                            darkMode ?
+                                <>
+                                    <FontAwesomeIcon icon={faSun} className="mr-3"/>
+                                    <span>Modo Claro</span>
+                                </>
+                            :
+                                <>
+                                    <FontAwesomeIcon icon={faMoon} className="mr-2"/>
+                                    <span>Modo Escuro</span>
+                                </>
                         }
-                    </button>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        className="block cursor-pointer px-4 py-2 hover:ring-1 ring-gray-600 hover:shadow-md rounded-md text-sm w-full hover:bg-gray-700 transition duration-300 text-left"
+                    >
+                        <FontAwesomeIcon icon={faGear} className="mr-2"/>
+                        Configurações
+                    </a>
                 </li>
             </ul>
         </nav>
