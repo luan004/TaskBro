@@ -5,7 +5,7 @@ import { useTheme } from '../../utils/ThemeContext'
 
 const SideBar = () => {
     const { darkMode, toggleDarkMode } = useTheme()
-    const [ settingsDropdown, setSettingsDropdown ] = useState(true)
+    const [ settingsDropdown, setSettingsDropdown ] = useState(false)
 
     return (
         <nav className="flex flex-col transition duration-300 p-4 shadow-md ring-1 ring-blue-400 h-screen bg-gray-800 w-56 text-white text-gray-600">
@@ -52,7 +52,11 @@ const SideBar = () => {
                 </li>
             </ul>
 
-            <div className='mt-auto flex flex-col relative'>
+            <div
+                className='mt-auto flex flex-col relative pt-3'
+                onMouseEnter={() => setSettingsDropdown(true)}
+                onMouseLeave={() => setSettingsDropdown(false)}
+            >
                 <button
                     className='mt-auto px-1 py-1 flex items-center cursor-pointer ring-1 ring-gray-600 shadow-md rounded-md text-sm w-full bg-gray-700 transition duration-300 text-left'
                     onClick={() => setSettingsDropdown(!settingsDropdown)}
@@ -70,7 +74,7 @@ const SideBar = () => {
                         <FontAwesomeIcon icon={faGear} className="mx-3"/>
                     </div>
                 </button>
-                <div className={`backdrop-blur-md backdrop-opacity-25 absolute p-2 w-full bottom-0 mb-14 dropdown-content bg-gray-700/30 rounded-md ring-1 ring-gray-600 
+                <div className={`backdrop-filter backdrop-blur-md absolute p-2 w-full bottom-0 mb-14 dropdown-content bg-gray-700/30 rounded-md ring-1 ring-gray-600 
                     ${
                         settingsDropdown ? '' : 'hidden'
                     }`
