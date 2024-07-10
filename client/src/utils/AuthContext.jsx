@@ -11,6 +11,13 @@ export const AuthProvider = ({ children, redirect }) => {
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
 
+    const closeSession = () => {
+        console.log('closeSession')
+        //setUser(null)
+        //localStorage.removeItem("token")
+        //navigate('/login')
+    }
+
     useEffect(() => {
         const checkAuth = async () => {
             try {

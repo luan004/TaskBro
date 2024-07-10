@@ -2,10 +2,12 @@ import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSun, faMoon, faGear, faTableColumns, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { useTheme } from '../../utils/ThemeContext'
+import { useAuth } from '../../utils/AuthContext'
 
 const SideBar = () => {
     const { darkMode, toggleDarkMode } = useTheme()
     const [ settingsDropdown, setSettingsDropdown ] = useState(false)
+    const { user, closeSession } = useAuth()
 
     return (
         <nav className="flex flex-col transition duration-300 p-4 shadow-md ring-1 ring-blue-400 h-screen bg-gray-800 w-56 text-white text-gray-600">
@@ -42,14 +44,6 @@ const SideBar = () => {
                         }
                     </a>
                 </li>
-                <li>
-                    <a
-                        className="block cursor-pointer px-4 py-2 hover:ring-1 ring-gray-600 hover:shadow-md rounded-md text-sm w-full hover:bg-gray-700 transition duration-300 text-left"
-                    >
-                        <FontAwesomeIcon icon={faGear} className="mr-2"/>
-                        Configurações
-                    </a>
-                </li>
             </ul>
 
             <div
@@ -70,9 +64,6 @@ const SideBar = () => {
                             Nome
                         </span>
                     </div>
-                    <div className='ml-auto'>
-                        <FontAwesomeIcon icon={faGear} className="mx-3"/>
-                    </div>
                 </button>
                 <div className={`backdrop-filter backdrop-blur-md absolute p-2 w-full bottom-0 mb-14 dropdown-content bg-gray-700/30 rounded-md ring-1 ring-gray-600 
                     ${
@@ -82,11 +73,12 @@ const SideBar = () => {
                     <a
                         className="block cursor-pointer px-4 py-2 hover:ring-1 ring-gray-600 hover:shadow-md rounded-md text-sm w-full hover:bg-gray-700 transition duration-300 text-left"
                     >
-                        <FontAwesomeIcon icon={faUser} className="mr-2"/>
-                        Perfil
+                        <FontAwesomeIcon icon={faGear} className="mr-2"/>
+                        Configurações
                     </a>
                     <a
                         className="block cursor-pointer px-4 py-2 hover:ring-1 ring-gray-600 hover:shadow-md rounded-md text-sm w-full hover:bg-gray-700 transition duration-300 text-left"
+                        onClick={closeSession}
                     >
                         <FontAwesomeIcon icon={faRightFromBracket} className="mr-2"/>
                         Sair
