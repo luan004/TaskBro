@@ -1,28 +1,55 @@
 import { useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSun, faMoon, faGear, faTableColumns, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { faSun, faMoon, faGear, faTableColumns, faRightFromBracket, faChartSimple } from '@fortawesome/free-solid-svg-icons'
 import { useTheme } from '../../utils/ThemeContext'
 import { useAuth } from '../../utils/AuthContext'
+import SideBarItem from '../sidebar/SideBarItem'
 
 const SideBar = () => {
     const { darkMode, toggleDarkMode } = useTheme()
     const [ settingsDropdown, setSettingsDropdown ] = useState(false)
-    const { user, closeSession } = useAuth()
+    const { user, setUser, closeSession } = useAuth()
+    const { sideBarHidden, setSideBarHidden } = useState(false)
+
+    const toggleSideBar = () => {
+        setDarkMode((prevDarkMode) => {
+            const newDarkMode = !prevDarkMode;
+            Cookies.set('darkMode', newDarkMode.toString(), { expires: 365 })
+            return newDarkMode
+        })
+    }
 
     return (
-        <nav className="flex flex-col transition duration-300 p-4 shadow-md ring-1 ring-blue-400 h-screen bg-gray-800 w-56 text-white text-gray-600">
+        <nav
+            className={`flex flex-col transition duration-300 p-4 shadow-md ring-1 ring-blue-400 md:h-screen bg-gray-800 w-56 text-white text-gray-600 overflow-hidden h-64 ${
+                sideBarHidden ? 'w-16' : 'w-56'
+            }`}
+        >
             <ul className='space-y-2'>
                 <li
                     className="mx-4 transition text-2xl font-bold w-full mb-4"
                 >
                     Taskbro
                 </li>
+                <SideBarItem item={{ title: 'Kanban', icon: faTableColumns, path: '/kanban' }} />
+                <SideBarItem item={{ title: 'Estatísticas', icon: faChartSimple, path: '/stats' }} />
                 <li>
                     <a
                         className="block cursor-pointer px-4 py-2 hover:ring-1 ring-gray-600 hover:shadow-md rounded-md text-sm w-full hover:bg-gray-700 transition duration-300 text-left"
+                        onClick={toggleDarkMode}
                     >
-                        <FontAwesomeIcon icon={faTableColumns} className="mr-3"/>
-                        Kanban
+                        {
+                            darkMode ?
+                                <>
+                                    <FontAwesomeIcon icon={faSun} className="mr-3"/>
+                                    <span>Modo Claro</span>
+                                </>
+                            :
+                                <>
+                                    <FontAwesomeIcon icon={faMoon} className="mr-2"/>
+                                    <span>Modo Escuro</span>
+                                </>
+                        }
                     </a>
                 </li>
                 <li>
@@ -43,6 +70,8 @@ const SideBar = () => {
                                 </>
                         }
                     </a>
+                </li>
+                <li>
                 </li>
             </ul>
 

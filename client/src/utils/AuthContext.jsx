@@ -12,10 +12,9 @@ export const AuthProvider = ({ children, redirect }) => {
     const navigate = useNavigate()
 
     const closeSession = () => {
-        console.log('closeSession')
-        //setUser(null)
-        //localStorage.removeItem("token")
-        //navigate('/login')
+        setUser(null)
+        localStorage.removeItem("token")
+        navigate('/login')
     }
 
     useEffect(() => {
@@ -30,19 +29,13 @@ export const AuthProvider = ({ children, redirect }) => {
                     if (res.data.status === 'success') {
                         setUser(res.data.data)
                     } else {
-                        setUser(null)
-                        localStorage.removeItem("token")
-                        navigate(redirect || '/login')
+                        closeSession()
                     }
                 }).catch(err => {
-                    setUser(null)
-                    localStorage.removeItem("token")
-                    navigate(redirect || '/login')
+                    closeSession()
                 })
             } catch (error) {
-                setUser(null)
-                localStorage.removeItem("token")
-                navigate(redirect || '/login')
+                closeSession()
             } finally {
                 setLoading(false)
             }
@@ -62,7 +55,7 @@ export const AuthProvider = ({ children, redirect }) => {
     }
 
     return (
-        <AuthContext.Provider value={{ user, setUser }}>
+        <AuthContext.Provider value={{ user, setUser, closeSession}}>
             {children}
         </AuthContext.Provider>
     )
